@@ -1,0 +1,21 @@
+<nav class="bg-zinc-800 shadow-md">
+    <div class="container mx-auto flex justify-between items-center p-4">
+      <a href="/" class="text-xl font-bold text-white">MyApp</a>
+      
+      <!-- Links for authenticated users -->
+      <% if (user) { %>
+        <div class="flex items-center space-x-4">
+          <a href="/profile" class="text-gray-300 hover:text-white">Profile</a>
+          <a href="/posts/feed" class="text-gray-300 hover:text-white">Feed</a>
+          <a href="/logout" class="text-gray-300 hover:text-white">Logout</a>
+        </div>
+      <% } else { %>
+        <!-- Links for unauthenticated users -->
+        <div class="flex items-center space-x-4">
+          <a href="/login" class="text-gray-300 hover:text-white">Login</a>
+          <a href="/register" class="text-gray-300 hover:text-white">Register</a>
+        </div>
+      <% } %>
+    </div>
+  </nav>
+  

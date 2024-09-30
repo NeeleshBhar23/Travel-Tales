@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MyApp</title>
+    <meta name="description" content="MyApp Description">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Optional custom styles */
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <!-- Navbar -->
+    <nav class="bg-zinc-800 shadow-md rounded-lg ">
+        <div class="container mx-auto flex flex-wrap items-center justify-between p-4">
+          <a href="/" class="text-xl font-bold text-white">MyApp</a>
+          <button id="navbar-toggle" class="block lg:hidden text-white focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          <div id="navbar-menu" class="hidden lg:flex flex-grow items-center justify-center lg:justify-end space-x-4">
+            <a href="/profile" class="text-gray-300 hover:text-white">Profile</a>
+            <a href="/posts/feed" class="text-gray-300 hover:text-white">Feed</a>
+            <a href="/logout" class="text-gray-300 hover:text-white">Logout</a>
+          </div>
+          <div id="navbar-menu-mobile" class="lg:hidden hidden flex-col w-full mt-4">
+            <!-- <a href="/login" class="text-gray-300 hover:text-white py-2 px-4">Login</a>
+            <a href="/register" class="text-gray-300 hover:text-white py-2 px-4">Register</a> -->
+            <a href="/profile" class="text-gray-300 hover:text-white py-2 px-4">Profile</a>
+            <a href="/posts/feed" class="text-gray-300 hover:text-white py-2 px-4">Feed</a>
+            <a href="/logout" class="text-gray-300 hover:text-white py-2 px-4">Logout</a>
+          </div>
+        </div>
+      </nav>
+      
+
+</body>
+</html>
