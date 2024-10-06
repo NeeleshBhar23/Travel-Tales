@@ -3,142 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile</title>
-   <script src="https://cdn.tailwindcss.com"></script>
+  <title>Travel Tales</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="w-full min-h-screen bg-zinc-900 text-white p-5">
-  <!-- <div class="w-full flex justify-end gap-3">
-    <a class="px-3 py-2 bg-gray-500 rounded-md inline-block mb-3 text-sm" href="/posts/feed">Feed</a>
-    <a class="px-3 py-2 bg-red-500 rounded-md inline-block mb-3 text-sm" href="/logout">LogOut</a>
-    <a class="px-3 py-2 bg-gray-500 rounded-md inline-block mb-3 text-sm" href="/home">Go Home</a>
-  </div> -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-  <div class="flex item-start gap-3 mt-5">
-    <div class="w-12 h-12 rounded-md overflow-hidden ml-1">
-      <img class="w-full h-full object-cover" src="/images/uploads/<%= user.profilepic %>" alt="Profile" />
-    </div>
-    <h1 class="sm:text-3xl text-xl">
-      <span class="font-light">Hello</span>, <%= user.name %> !👋🏼
-    </h1>
-  </div>
-
-  <div class="flex gap-3">
-    <p class="text-zinc-400 text-sm">@<%= user.username %></p>
-    <p class="text-zinc-400 text-sm"><%= user.email %></p>
-  </div>
-
-  <h5 class="text-zinc-600 mb-2 mt-3 ml-1">Create a Post here...</h5>
-  <form action="/post" method="post" enctype="multipart/form-data">
-    <input
-      class="w-72 px-3 py-2 rounded-md bg-transparent outline-none border-2 border-zinc-800 mb-3"
-      type="text"
-      placeholder="Heading.."
-      name="heading"
-    />
-    <textarea
-      placeholder="Write anything.."
-      class="block p-3 outline-none w-full md:w-2/4 lg:w-2/4 h-40 resize-none bg-transparent border-2 border-zinc-800 rounded-md"
-      name="content"
-    ></textarea>
-    <input
-      class="w-72 px-3 py-2 rounded-md bg-transparent outline-none border-2 border-zinc-800 mb-2 mt-2"
-      type="text"
-      name="hashtags"
-      placeholder="Add hashtags (separated by commas)"
-    />
-    <input
-      class="px-2 py-1 w-24 bg-gray-500 block rounded-md text-sm mt-2"
-      type="file"
-      name="postimage"
-    />
-    <div class="flex mt-2">
-      <input
-        class="px-2 py-1 w-30 bg-blue-500 block rounded-md text-sm"
-        type="submit"
-        value="Create New Post"
-      />
-      <a class="px-2 py-1 bg-blue-500 block rounded-md text-sm ml-2" href="/profile/upload">
-        Add Profile Pic
-      </a>
-    </div>
-  </form>
-
-  <div class="posts mt-20">
-    <h3 class="text-white">Your Posts</h3>
-    <div class="postcontainer mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-      <% posts.forEach(post => { %>
-        <div key="<%= post._id %>" class="post p-4 mb-2 rounded-md bg-zinc-800 border-zinc-600">
-          <div class="flex">
-            <div class="w-7 h-7 rounded-s-md overflow-hidden">
-              <img class="w-full h-full object-cover" src="/images/uploads/<%= user.profilepic %>" alt="Profile" />
-            </div>
-            <h4 class="p-1 bg-zinc-600 h-7 w-24 rounded-e-md mb-3 text-sm">@<%= user.username %></h4>
-          </div>
-          <% if (post.postpic) { %>
-            <div class="w-full h-40 rounded-s-md overflow-hidden">
-              <img class="w-full h-full object-cover" src="/images/uploads/<%= post.postpic %>" alt="Post" />
-            </div>
-          <% } %>
-          <a href="/posts/post/<%= post._id %>">
-            <p class="text-xl font-bold tracking-tight"><%= post.heading %></p>
-          </a>
-          <small class="mt-4 inline-block"><%= post.likes.length %> likes</small>
-          <div class="btns mt-auto flex gap-5">
-            <!-- Add Like/Unlike functionality -->
-            <button class="text-blue-500" onclick="handleLike('<%= post._id %>')">
-              <%= post.likes.indexOf(user._id) === -1 ? "Like" : "Unlike" %>
-            </button>
-            <a href="/edit/<%= post._id %>" class="text-zinc-500">Edit</a>
-            <a href="/delete/<%= post._id %>" class="text-zinc-500">Delete</a>
-          </div>
+    <!-- Left Sidebar (User Details) -->
+    <div class="col-span-1 flex flex-col gap-4 mt-8">
+      <div class="flex flex-col items-center">
+        <div class="w-24 h-24 rounded-full overflow-hidden">
+          <img class="w-full h-full object-cover" src="/images/uploads/<%= user.profilepic %>" alt="Profile" />
         </div>
-      <% }) %>
-    </div>
-  </div>
+        <h1 class="text-2xl mt-2">
+          <span class="font-light">Hello</span>, <%= user.name %>! 👋🏼
+        </h1>
+        <p class="text-zinc-400 text-sm mt-2">@<%= user.username %></p>
+        <p class="text-zinc-400 text-sm mt-1 "><%= user.email %></p>
+      </div>
 
-  <h3 class="text-white text-2xl font-bold mt-3">Saved Posts</h3>
-  <div class="postcontainer mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-    <% savedPosts.forEach(post => { %>
-      <div key="<%= post._id %>" class="post w-full p-4 mb-2 rounded-md bg-zinc-800 border-zinc-600">
-        <div class="post-details mt-2 flex items-center">
-          <% if (post.user) { %>
-            <img
-              src="/images/uploads/<%= post.user.profilepic %>"
-              alt="User Profile Pic"
-              class="w-10 h-10 rounded-full"
-            />
-            <span class="ml-2 text-white"><%= post.user.username %></span>
-          <% } else { %>
-            <span class="ml-2 text-white">User information unavailable</span>
-          <% } %>
-        </div>
-        <% if (post.postpic) { %>
-          <div class="w-full h-40 rounded-s-md overflow-hidden">
-            <img class="w-full h-full object-cover" src="/images/uploads/<%= post.postpic %>" alt="Post" />
+      <!-- Add a Button to Change Profile Pic -->
+      <a class="px-4 py-2 bg-[#14b1ff] rounded-md text-sm mt-4 text-center hover:bg-blue-500 " href="/profile/upload">Add Profile Pic</a>
+    </div>
+
+    <!-- Right Main Section (Create Post and User's Posts) -->
+    <div class="col-span-3 flex flex-col gap-8 mt-8">
+      <!-- Create Post Section -->
+      <div>
+        <h5 class="text-zinc-600 mb-2">Create a Post here...</h5>
+        <form action="/post" method="post" enctype="multipart/form-data" class="flex flex-col gap-3">
+          <input class="w-full px-3 py-2 rounded-md bg-transparent outline-none border-2 border-zinc-800 shadow-lg shadow-sky-500/20" type="text" placeholder="Heading.." name="heading" />
+          <textarea placeholder="Write anything.." class="block p-3 outline-none w-full h-40 resize-none bg-transparent   rounded-md border-2 border-zinc-800 	shadow-lg shadow-sky-500/20 " name="content"></textarea>
+          <input class="w-full px-3 py-2 rounded-md bg-transparent outline-none border-2 border-zinc-800 shadow-lg shadow-sky-500/20" type="text" name="hashtags" placeholder="Add hashtags (separated by commas)" />
+      
+          <!-- Centered file input button -->
+          <div class="flex ">
+            <input class="px-2 py-1 w-1/2 bg-gray-500 rounded-md text-sm hover:bg-gray-300 hover:text-gray-900" type="file" name="postimage" />
           </div>
-        <% } %>
-        <a href="/posts/post/<%= post._id %>">
-          <p class="text-xl font-bold tracking-tight"><%= post.heading %></p>
-        </a>
-        <small class="mt-4 inline-block"><%= post.likes.length %> likes</small>
-        <div class="btns mt-auto flex gap-5">
-          <!-- Add Like/Unlike functionality -->
-          <button class="text-blue-500" onclick="handleLike('<%= post._id %>')">
-            <%= post.likes.indexOf(user._id) === -1 ? "Like" : "Unlike" %>
-          </button>
-          <form action="/save/<%= post._id %>" method="POST">
-            <% if (user && user.savedPosts && user.savedPosts.includes(post._id)) { %>
-              <button type="submit" class="text-blue-500">Save</button>
-            <% } else { %>
-              <button type="submit" class="text-red-500">Unsave</button>
-            <% } %>
-          </form>
+      
+          <!-- Centered submit button -->
+          <div class="flex ">
+            <button class="px-4 py-2 w-1/2 bg-[#14b1ff] rounded-md text-sm mt-2 hover:bg-blue-500">Create New Post</button>
+          </div>
+        </form>
+      </div>
+      
+
+      <!-- User's Posts Section -->
+      <div>
+        <h3 class="text-white text-xl">Your Posts</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+          <% posts.forEach(post => { %>
+            <div key="<%= post._id %>" class="post p-4 rounded-md bg-zinc-800 border border-zinc-600">
+              <div class="flex gap-2 mb-3">
+                <div class="w-8 h-8 rounded-s-md overflow-hidden  ">
+                  <img class="w-full h-full object-cover" src="/images/uploads/<%= user.profilepic %>" alt="Profile" />
+                </div>
+                <h4 class="p-1 bg-zinc-600 h-8 rounded-e-md text-sm">@<%= user.username %></h4>
+              </div>
+              <% if (post.postpic) { %>
+                <div class="w-full h-40 rounded-md overflow-hidden mb-3">
+                  <img class="w-full h-full object-cover" src="/images/uploads/<%= post.postpic %>" alt="Post" />
+                </div>
+              <% } %>
+              <a href="/posts/post/<%= post._id %>">
+                <p class="text-xl font-bold"><%= post.heading %></p>
+              </a>
+              <small><%= post.likes.length %> likes</small>
+              <div class="mt-2 flex gap-4">
+                <button class="text-blue-500" onclick="handleLike('<%= post._id %>')">
+                  <%= post.likes.indexOf(user._id) === -1 ? "Like" : "Unlike" %>
+                </button>
+                <a href="/edit/<%= post._id %>" class="text-zinc-500">Edit</a>
+                <a href="/delete/<%= post._id %>" class="text-zinc-500">Delete</a>
+              </div>
+            </div>
+          <% }) %>
         </div>
       </div>
-    <% }) %>
+
+      <!-- Saved Posts Section -->
+      <div>
+        <h3 class="text-white text-xl">Saved Posts</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+          <% savedPosts.forEach(post => { %>
+            <div key="<%= post._id %>" class="post p-4 rounded-md bg-zinc-800 border border-zinc-600">
+              <div class="flex gap-2 items-center mb-3">
+                <% if (post.user) { %>
+                  <img src="/images/uploads/<%= post.user.profilepic %>" alt="User Profile Pic" class="w-8 h-8 rounded-s-md overflow-hidden" />
+                  <span class="p-1 bg-zinc-600 h-8 rounded-e-md text-sm ">@<%= post.user.username %></span>
+                <% } else { %>
+                  <span class="text-white text-sm">User info unavailable</span>
+                <% } %>
+              </div>
+              <% if (post.postpic) { %>
+                <div class="w-full h-40 rounded-md overflow-hidden mb-3">
+                  <img class="w-full h-full object-cover" src="/images/uploads/<%= post.postpic %>" alt="Post" />
+                </div>
+              <% } %>
+              <a href="/posts/post/<%= post._id %>">
+                <p class="text-xl font-bold"><%= post.heading %></p>
+              </a>
+              <small><%= post.likes.length %> likes</small>
+              <div class="mt-2 flex gap-4">
+                <button class="text-blue-500" onclick="handleLike('<%= post._id %>')">
+                  <%= post.likes.indexOf(user._id) === -1 ? "Like" : "Unlike" %>
+                </button>
+                <form action="/save/<%= post._id %>" method="POST">
+                  <% if (user && user.savedPosts && user.savedPosts.includes(post._id)) { %>
+                    <button type="submit" class="text-blue-500">Unsave</button>
+                  <% } else { %>
+                    <button type="submit" class="text-red-500">Save</button>
+                  <% } %>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+    </div>
   </div>
 
-  
   <script src="/javascripts/navbar.js"></script>
 </body>
 </html>

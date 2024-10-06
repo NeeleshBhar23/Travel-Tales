@@ -316,7 +316,7 @@ app.post('/save/:id', isLoggedIn, async (req, res) => {
 app.post("/login", async (req, res) => {
   let { email, password } = req.body;
   let user = await userModel.findOne({ email });
-  if (!user) { return res.send("something is wrong"); }
+  if (!user) { return res.send("login is erroring..."); }
 
   bcrypt.compare(password, user.password, (err, result) => {
     if (result) {

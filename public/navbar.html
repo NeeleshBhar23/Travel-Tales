@@ -14,25 +14,29 @@
 </head>
 <body class="bg-gray-100 text-gray-900">
     <!-- Navbar -->
-    <nav class="bg-zinc-800 shadow-md rounded-lg ">
+    <nav class="bg-zinc-800 shadow-md rounded-full ">
         <div class="container mx-auto flex flex-wrap items-center justify-between p-4">
-          <a href="/" class="text-xl font-bold text-white">MyApp</a>
+          <div class="flex flex-shrink-0 items-center mr-2">
+            <img class="h-10 w-auto ml-2" src="/images/icons/logo.png" alt="Your Company">
+          </div>
+          
           <button id="navbar-toggle" class="block lg:hidden text-white focus:outline-none">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
           <div id="navbar-menu" class="hidden lg:flex flex-grow items-center justify-center lg:justify-end space-x-4">
-            <a href="/profile" class="text-gray-300 hover:text-white">Profile</a>
-            <a href="/posts/feed" class="text-gray-300 hover:text-white">Feed</a>
-            <a href="/logout" class="text-gray-300 hover:text-white">Logout</a>
+            <a href="/profile" class=" text-sky-500 hover:text-gray-300">Profile</a>
+            <a href="/posts/feed" class=" text-sky-500 hover:text-gray-300">Feed</a>
+            <a href="/logout" class=" p-1 w-18 text-sky-500 hover:text-gray-300 rounded-lg border-sky-500 hover:bg-red-700">Logout</a>
+            
           </div>
           <div id="navbar-menu-mobile" class="lg:hidden hidden flex-col w-full mt-4">
             <!-- <a href="/login" class="text-gray-300 hover:text-white py-2 px-4">Login</a>
             <a href="/register" class="text-gray-300 hover:text-white py-2 px-4">Register</a> -->
-            <a href="/profile" class="text-gray-300 hover:text-white py-2 px-4">Profile</a>
-            <a href="/posts/feed" class="text-gray-300 hover:text-white py-2 px-4">Feed</a>
-            <a href="/logout" class="text-gray-300 hover:text-white py-2 px-4">Logout</a>
+            <a href="/profile" class="text-gray-300 hover:text-sky-500 py-2 px-4">Profile</a>
+            <a href="/posts/feed" class="text-gray-300 hover:text-sky-500 py-2 px-4">Feed</a>
+            <a href="/logout" class="text-gray-300 hover:text-sky-500 py-2 px-4">Logout</a>
           </div>
         </div>
       </nav>
