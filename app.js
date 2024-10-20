@@ -37,10 +37,21 @@ app.post("/upload", isLoggedIn, upload.single("image"), async (req, res) => {
   res.redirect("/profile");
 });
 
-app.get("/home", isLoggedIn, async (req, res) => {
-  let user = await userModel.findOne({ email: req.user.email }).populate("posts");
-  res.render("home", { user });
+app.get('/home', async (req, res) => {
+  try {
+    let user = null;  // Initialize user as null
+    if (req.user) {   // Check if req.user is defined
+      user = await userModel.findById(req.user.userid);
+    }
+
+    const posts = await postModel.find().populate('user');  // Populate the 'user' field in posts
+    res.render('home', { posts, user: req.user });  
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
 });
+
 
 // app.post("/register", async (req, res) => {
 //   try {

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Tales</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="w-full min-h-screen bg-zinc-900 text-white p-5">
+  <div class="flex justify-center mt-2 px-3">
+     <h2 class="font-bold ">Hello, Welcome Guys!</h2>
+  </div>
+  <!-- Main container for the layout -->
+  <div class="flex flex-col md:flex-row gap-5">
+     <!-- Right Side: Search bar and login/signup options (2/3 of the page) -->
+     <div class="md:w-2/3 w-full">
+
+       <!-- Login/Signup Section -->
+       <div class="mt-10 flex justify-center">
+        <% if (!user) { %>
+          <div class=" w-full flex flex-col items-center bg-zinc-800 p-5 rounded-md shadow-md shadow-sky-500/50">
+            <p class="text-xl font-bold">Welcome to Travel Tales!</p>
+            <p class="text-md text-zinc-500 mb-5">Login or Sign Up to share your memories</p>
+            <div class="flex gap-5 mt-3 ">
+
+              <a href="/login" class=" w-24 px-5 py-2 bg-sky-400 rounded-md   hover:bg-blue-700 text-center">Login</a>
+            <a href="/" class=" w-24 px-5 py-2 bg-green-500 rounded-md hover:bg-green-700 text-center">Sign Up</a>
+
+            </div>
+            
+          </div>
+        <% } else { %>
+          <div class="text-xl text-white">Welcome back, <strong><%= user.username %></strong>!</div>
+        <% } %>
+      </div>
+      
+      <!-- Search bar -->
+      <div class="flex justify-center mt-5">
+        <form action="/search" method="GET" class="flex flex-col gap-3  w-full">
+          <!-- First search input for Memories -->
+          <input 
+            type="text" 
+            name="query" 
+            placeholder="Search Memories..." 
+            class="w-full px-3 py-2 rounded-md bg-zinc-800 outline-none border-zinc-800 shadow-md shadow-sky-500/50 text-white"
+          />
+      
+          <!-- Second search input for Tags -->
+          <input 
+            type="text" 
+            name="query" 
+            placeholder="Search Tags..." 
+            class="w-full px-3 py-2 rounded-md bg-zinc-800 outline-none border-zinc-800 shadow-md shadow-sky-500/50 text-white"
+          />
+      
+          <!-- Search button -->
+          <button type="submit" class="w-full px-3 py-2 bg-[#14b1ff] rounded-md hover:bg-sky-700">
+            Search
+          </button>
+        </form>
+      </div>
+      
+
+     
+
+    </div>
+    
+    <!-- Left Side: Display posts (1/3 of the page) -->
+<!-- Left Side: Display posts (1/3 of the page) -->
+ <div class="md:w-4/3 w-full">
+    <div class="posts">
+      <% if (posts.length > 0) { %>
+        <!-- Post container with grid layout for responsive design -->
+        <div class="postcontainer mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <% posts.reverse().forEach(post => { %>
+            <div class="post p-4 mb-2 rounded-md bg-zinc-800 border-zinc-600 flex flex-col justify-between">
+              <a href="/posts/post/<%= post._id %>">
+                <div class="flex items-center mb-3">
+                  <% if (post.user) { %>
+                      <div class="w-7 h-7 rounded-s-md overflow-hidden">
+                        <img class="w-full h-full object-cover" src="/images/uploads/<%= post.user.profilepic %>" alt="<%= post.user.username %>'s profile picture" />
+                      </div>
+                      <p class="p-1 bg-zinc-600 h-7 rounded-e-md text-sm ml-2"><strong>@<%= post.user.username %></strong></p>
+                    <% } else { %>
+                      <p>Unknown User</p>
+                    <% } %>
+                </div>
+                <% if (post.postpic) { %>
+                  <div class="w-full h-40 rounded-s-md overflow-hidden mb-3">
+                    <img class="w-full h-full object-cover" src="/images/uploads/<%= post.postpic %>" alt="Post Image" />
+                  </div>
+                <% } %>
+                <p class="text-xl font-bold tracking-tight"><%= post.heading %></p>
+                <p class="text-m text-zinc-500 mb-3">Read more</p>
+              </a>
+              <div class="mt-auto flex gap-5">
+                <p><%= post.likes.length %>❤️</p>
+                <form class="btns flex justify-end" action="/posts/<%= post._id %>/like" method="POST">
+                  <button type="submit">
+                    <% if (user && post.likes.includes(user._id)) { %> Unlike <% } else { %> Like <% } %>
+                  </button>
+                </form>
+                <form action="/save/<%= post._id %>" method="POST">
+                  <% if (user && user.savedPosts && user.savedPosts.includes(post._id)) { %>
+                    <button type="submit" class="text-red-500">Unsave</button>
+                  <% } else { %>
+                    <button type="submit" class="text-blue-500">Save</button>
+                  <% } %>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <h3 class="text-white text-3xl font-bold">No posts found for your search.</h3>
+      <% } %>
+    </div>
+  </div>
+  
+
+   
+    
+  </div>
+
+  <!-- <script src="/javascripts/navbar.js"></script> -->
+
+</body>
+</html>

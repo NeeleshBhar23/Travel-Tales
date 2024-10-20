@@ -38,7 +38,7 @@
         <% if (user) { %>
           <form action="/posts/<%= post._id %>/like" method="POST">
             <button
-              class="bg-blue-500 text-white px-3 py-1 rounded-md"
+              class="text-blue-500 px-3 py-1 rounded-md"
               type="submit"
             >
               <%= post.likes.includes(user._id) ? 'Unlike' : 'Like' %>
@@ -48,17 +48,17 @@
       </div>
     </div>
 
-    <!-- Navigation link -->
+    <!-- Navigation link 
     <div class="mt-6">
       <a class="px-3 py-2 bg-gray-500 rounded-md inline-block mb-3 text-sm" href="/posts/feed">
         Feed
       </a>
-    </div>
+    </div>-->
 
     <!-- Suggested Posts -->
     <div class="mt-10">
-      <h3 class="text-2xl mb-5">Suggested Posts</h3>
-      <div class="grid grid-cols-1 gap-4">
+      <h3 class="text-2xl mb-5">You Might also Like :-</h3>
+      <div class="postcontainer mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <% suggestedPosts.forEach(suggestedPost => { %>
           <div key="<%= suggestedPost._id %>" class="p-4 bg-zinc-800 rounded-md">
             <h4 class="text-xl font-bold mb-2"><%= suggestedPost.heading %></h4>
